@@ -9,7 +9,7 @@ export class App {
       const userName = $('.username.input').val();
 
       fetch(`https://api.github.com/users/${userName}`)
-        .then((response) => {response.json})
+        .then((response) => response.json())
         .then((body) => {
           self.profile = body;
           self.updateProfile();

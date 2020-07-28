@@ -9,7 +9,7 @@ const config = {
   context: path.resolve(__dirname, 'src'),
 
   entry: {
-    app: './index.js',
+    app: ['whatwg-fetch', './index.js'],
   },
 
   output: {
@@ -26,7 +26,18 @@ const config = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['env'],
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  useBuiltIns: 'usage',
+                  corejs: 3,
+                  targets: {
+                    browsers: ['> 0.5%', 'not dead'],
+                  },
+                },
+              ],
+            ],
           },
         },
       },

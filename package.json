@@ -12,9 +12,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "babel-core": "~6.26.0",
-    "babel-loader": "~7.1.2",
-    "babel-preset-env": "~1.6.0",
+    "@babel/core": "~7.10.5",
+    "@babel/preset-env": "~7.10.4", 
+    "babel-loader": "~8.1.0",
     "clean-webpack-plugin": "~0.1.17",
     "css-loader": "~0.28.7",
     "eslint": "7.2.0",
@@ -36,6 +36,8 @@
     "bulma": "^0.7.1",
     "bulma-start": "^0.0.2",
     "bulma-timeline": "^2.0.3",
-    "cash-dom": "^2.1.7"
+    "cash-dom": "^2.1.7",
+    "core-js": "^3.6",
+    "whatwg-fetch": "^3.2.0"
   }
 }
