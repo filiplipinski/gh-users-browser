@@ -9,10 +9,16 @@
         <div class="navbar-item">
           <div class="field has-addons">
             <div class="control">
-              <input class="input username" type="text" placeholder="enter github username" />
+              <input
+                required
+                id="js-username"
+                class="input"
+                type="text"
+                placeholder="enter github username"
+              />
             </div>
             <div class="control">
-              <button class="button is-info load-username">
+              <button id="js-load-username" class="button is-info">
                 Load
               </button>
             </div>
