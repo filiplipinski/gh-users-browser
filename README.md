@@ -1,6 +1,7 @@
 # GH-Browser
 
 A browser for Github users. Entering github username will display user's details and history of his public events.
+My code review you can find here:  [CODE REVIEW](https://github.com/filiplipinski/gh-users-browser/pull/1) 
 
 ## Installation
 
