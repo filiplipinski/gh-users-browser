@@ -3,7 +3,7 @@ module.exports = {
     browser: true,
     es2020: true,
   },
-  extends: ['airbnb-base', 'eslint:recommended'],
+  extends: ['airbnb-base', 'eslint:recommended', 'prettier'],
   parserOptions: {
     ecmaVersion: 11,
     sourceType: 'module',
