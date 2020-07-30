@@ -19,15 +19,22 @@ export class App {
     if (userNamePattern.test(userName)) {
       this.$userNameInput.removeClass('is-danger');
 
+      $('#spinner').removeClass('is-hidden');
+      $('#js-profile').toggleClass('is-hidden');
+      $('#js-events-container').toggleClass('is-hidden');
+
       const profile = await getUserAsync(userName);
+      $('#js-profile').toggleClass('is-hidden');
 
       if (profile) {
         this.profile = profile;
         this.updateProfile();
 
         this.userHistory = await getUserHistoryAsync(userName);
+        $('#js-events-container').toggleClass('is-hidden');
         this.updateHistory();
       }
+      $('#spinner').addClass('is-hidden');
     } else {
       this.$userNameInput.addClass('is-danger');
     }
