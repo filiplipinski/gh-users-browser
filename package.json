@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "./node_modules/.bin/webpack-dev-server",
-    "build": "./node_modules/.bin/webpack -p",
+    "build": "./node_modules/.bin/webpack -p --env.production",
     "watch": "./node_modules/.bin/webpack --watch"
   },
   "keywords": [],
@@ -13,7 +13,7 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "~7.10.5",
-    "@babel/preset-env": "~7.10.4", 
+    "@babel/preset-env": "~7.10.4",
     "babel-loader": "~8.1.0",
     "clean-webpack-plugin": "~0.1.17",
     "css-loader": "~0.28.7",

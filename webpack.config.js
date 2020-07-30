@@ -5,100 +5,104 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const extractPlugin = new ExtractTextPlugin({ filename: './assets/css/app.css' });
 
-const config = {
-  context: path.resolve(__dirname, 'src'),
+const config = (env) => {
+  const prod = env ? env.production : false;
 
-  entry: {
-    app: ['whatwg-fetch', './index.js'],
-  },
+  return {
+    context: path.resolve(__dirname, 'src'),
 
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: './assets/js/[name].bundle.js',
-  },
+    entry: {
+      app: ['whatwg-fetch', './index.js'],
+    },
 
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        include: /src/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              [
-                '@babel/preset-env',
-                {
-                  useBuiltIns: 'usage',
-                  corejs: 3,
-                  targets: {
-                    browsers: ['> 0.5%', 'not dead'],
+    output: {
+      path: path.resolve(__dirname, 'dist'),
+      filename: './assets/js/[name].bundle.js',
+    },
+
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          include: /src/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                [
+                  '@babel/preset-env',
+                  {
+                    useBuiltIns: 'usage',
+                    corejs: 3,
+                    targets: {
+                      browsers: ['> 0.5%', 'not dead'],
+                    },
                   },
-                },
+                ],
               ],
-            ],
+            },
           },
         },
-      },
-      {
-        test: /\.html$/,
-        use: ['html-loader'],
-      },
-      {
-        test: /\.s?css$/,
-        use: extractPlugin.extract({
+        {
+          test: /\.html$/,
+          use: ['html-loader'],
+        },
+        {
+          test: /\.s?css$/,
+          use: extractPlugin.extract({
+            use: [
+              {
+                loader: 'css-loader',
+                options: {
+                  sourceMap: true,
+                },
+              },
+              {
+                loader: 'sass-loader',
+                options: {
+                  sourceMap: true,
+                },
+              },
+            ],
+            fallback: 'style-loader',
+          }),
+        },
+        {
+          test: /\.(jpg|png|gif|svg)$/,
           use: [
             {
-              loader: 'css-loader',
+              loader: 'file-loader',
               options: {
-                sourceMap: true,
-              },
-            },
-            {
-              loader: 'sass-loader',
-              options: {
-                sourceMap: true,
+                name: '[name].[ext]',
+                outputPath: './assets/media/',
               },
             },
           ],
-          fallback: 'style-loader',
-        }),
-      },
-      {
-        test: /\.(jpg|png|gif|svg)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: './assets/media/',
-            },
-          },
-        ],
-      },
-      {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: ['file-loader'],
-      },
+        },
+        {
+          test: /\.(woff|woff2|eot|ttf|otf)$/,
+          use: ['file-loader'],
+        },
+      ],
+    },
+
+    plugins: [
+      new CleanWebpackPlugin(['dist']),
+      new HtmlWebpackPlugin({ template: 'index.html' }),
+      extractPlugin,
     ],
-  },
 
-  plugins: [
-    new CleanWebpackPlugin(['dist']),
-    new HtmlWebpackPlugin({ template: 'index.html' }),
-    extractPlugin,
-  ],
+    devServer: {
+      contentBase: path.resolve(__dirname, './dist/assets/media'),
+      compress: true,
+      port: 2000,
+      stats: 'errors-only',
+      open: true,
+    },
 
-  devServer: {
-    contentBase: path.resolve(__dirname, './dist/assets/media'),
-    compress: true,
-    port: 2000,
-    stats: 'errors-only',
-    open: true,
-  },
-
-  devtool: 'inline-source-map',
+    devtool: !prod && 'inline-source-map',
+  };
 };
 
 module.exports = config;
